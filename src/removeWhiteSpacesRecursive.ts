@@ -1,12 +1,18 @@
-export function removeWhiteSpacesRecursive(obj: object) : object{
+export function removeWhiteSpacesRecursive(obj: any) : any{
     for (const k in obj) {
-        if (typeof obj[k] === 'string' || obj[k] instanceof String){
-            obj[k] = obj[k].trim();
-            while (obj[k].includes("  "))
-            obj[k] = obj[k].replace("  ", " ");
+        const value = obj[k];
+        
+        if (typeof value === 'string' || value instanceof String){
+            let strValue = value;
+            strValue = strValue.trim();
+            strValue = strValue.trim();
+            while (strValue.includes("  "))
+                strValue = strValue.replace("  ", " ");
+
+            obj[k] = strValue;
         }
-        else if (typeof obj[k] === 'object')
-            obj[k] = removeWhiteSpacesRecursive(obj[k]);
+        else if (typeof value === 'object')
+            obj[k] = removeWhiteSpacesRecursive(value);
     }
 
     return obj;
