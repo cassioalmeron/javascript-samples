@@ -16,3 +16,7 @@
     return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   }
   
+  export function fillLeft(str: string, length: number, char: string): string {
+    return `${`${char}${str}`.slice(-length)}`;
+  }
+  
