@@ -1,4 +1,4 @@
-import { removeWhiteSpacesRecursive } from "./removeWhiteSpacesRecursive";
+import { removeWhiteSpacesRecursive } from "../removeWhiteSpacesRecursive";
 
 type MyType = {
     name: string;
