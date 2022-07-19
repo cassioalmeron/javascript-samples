@@ -5,40 +5,51 @@ export function getDateOnly(date: Date): Date {
 }
 
 export function firstDayOfYear(date: Date): Date {
-  const res = new Date(
-    date.getFullYear(), 0, 1
-  );
+  const res = new Date(date.getFullYear(), 0, 1);
   return res;
 }
 
 export function lastDayOfYear(date: Date): Date {
-  const res = new Date(
-    date.getFullYear(), 11, 31
-  );
+  const res = new Date(date.getFullYear(), 11, 31);
   return res;
 }
 
-export function firstDayOfMonth(date: Date): Date {
-  const res = new Date(
-    date.getFullYear(), date.getMonth(), 1
-  );
+export function firstDayOfMonth(date: Date | MonthYear): Date {
+  const monthYear: MonthYear = date as MonthYear;
+  if (date instanceof Date) {
+    monthYear.month = (date as Date).getMonth();
+    monthYear.year = (date as Date).getFullYear();
+  }
+
+  const res = new Date(monthYear.year, monthYear.month, 1);
   return res;
 }
 
-export function lastDayOfMonth(date: Date): Date {
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  
-  const res = new Date(
-    date.getFullYear(), month, daysInMonth
-  );
+type MonthYear = {
+  month: number;
+  year: number;
+};
+
+export function lastDayOfMonth(date: Date | MonthYear): Date {
+  const monthYear: MonthYear = date as MonthYear;
+  if (date instanceof Date) {
+    monthYear.month = (date as Date).getMonth();
+    monthYear.year = (date as Date).getFullYear();
+  }
+
+  const days = daysInMonth(monthYear);
+
+  const res = new Date(monthYear.year, monthYear.month, days);
   return res;
 }
 
-export function daysInMonth(date: Date): number{
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  return daysInMonth;
+export function daysInMonth(date: Date | MonthYear): number {
+  const monthYear: MonthYear = date as MonthYear;
+  if (date instanceof Date) {
+    monthYear.month = (date as Date).getMonth();
+    monthYear.year = (date as Date).getFullYear();
+  }
+
+  const days = new Date(monthYear.year, monthYear.month + 1, 0).getDate();
+  return days;
 }
